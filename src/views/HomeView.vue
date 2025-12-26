@@ -93,17 +93,18 @@
   <style scoped>
   /* 1. 設定粉色漸層變數 */
   .gallery-section {
-    --pink-light: #fff5f7;
-    --pink-medium: #ffe4e9;
-    --pink-accent: #ffb8c6;
-    --text-main: #5a4a4d;
-    
-    position: relative;
-    padding: 8vw 5vw;
-    background: linear-gradient(135deg, var(--pink-light) 0%, var(--pink-medium) 100%);
-    color: var(--text-main);
-    overflow: hidden;
-  }
+  --pink-light: #fff5f7;
+  --pink-medium: #ffe4e9;
+  --pink-accent: #ffb8c6;
+  --text-main: #5a4a4d;
+  
+  position: relative;
+  /* 修正這裡：第一個值是上方距離，根據你的 Navbar 高度調整 */
+  padding: 180px 5vw 8vw; 
+  background: linear-gradient(135deg, var(--pink-light) 0%, var(--pink-medium) 100%);
+  color: var(--text-main);
+  overflow: hidden;
+}
   
   /* 2. 背景裝飾光暈 */
   .bg-blur-dot {
@@ -127,9 +128,10 @@
   .gallery-header { 
   position: relative; 
   z-index: 2; 
-  margin-bottom: 6rem; 
-  display: flex;         /* 新增：使用 flex 讓父層容易控制 */
-  justify-content: center; /* 新增：讓內容物在頁面水平居中 */
+  margin-top: 10px;    /* 如果還要再微調標題自己往下的距離 */
+  margin-bottom: 4rem; /* 增加標題與作品卡片之間的呼吸感 */
+  display: flex;
+  justify-content: center;
   text-align: center;
 }
 

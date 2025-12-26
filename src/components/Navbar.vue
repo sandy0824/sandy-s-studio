@@ -10,8 +10,13 @@
   ])
   
   const isScrolled = ref(false)
+  const isMenuOpen = ref(false) // 新增：控制手機版選單開關
   
-  // 監聽滾動，讓導覽列在滾動時產生細微變化
+  // 切換選單
+  const toggleMenu = () => {
+    isMenuOpen.value = !isMenuOpen.value
+  }
+  
   onMounted(() => {
     window.addEventListener('scroll', () => {
       isScrolled.value = window.scrollY > 50
@@ -27,9 +32,9 @@
           <span class="brand-name">{{ brandName }}</span>
         </RouterLink>
   
-        <ul class="nav-menu">
+        <ul class="nav-menu" :class="{ 'nav-menu-open': isMenuOpen }">
           <li v-for="link in navLinks" :key="link.name">
-            <RouterLink :to="link.path" class="nav-item">
+            <RouterLink :to="link.path" class="nav-item" @click="isMenuOpen = false">
               {{ link.name }}
               <span class="dot"></span>
             </RouterLink>
@@ -37,7 +42,10 @@
         </ul>
   
         <div class="nav-actions">
-          <button class="hire-me">Go !</button>
+          <button class="menu-toggle" @click="toggleMenu">
+            <span class="hamburger" :class="{ 'active': isMenuOpen }"></span>
+          </button>
+          
         </div>
       </div>
     </nav>
@@ -186,9 +194,111 @@
     100% { transform: scale(2.5); opacity: 0; }
   }
   
-  /* 手機版適配 */
   @media (max-width: 768px) {
-    .nav-menu { display: none; } /* 手機版通常會改用漢堡選單 */
-    .nav-capsule { padding: 8px 10px 8px 18px; }
+  .menu-toggle { display: block; }
+
+  .nav-menu {
+    display: flex; /* ✅ 確保它是 flex，不要是 none */
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    width: 90%;
+    background: rgba(255, 255, 255, 0.98); /* 稍微調高不透明度，手機才看得清楚 */
+    backdrop-filter: blur(15px);
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    
+    /* ✅ 預設隱藏狀態 */
+    opacity: 0;
+    pointer-events: none; 
+    
+    transition: all 0.3s ease;
+    gap: 15px;
+    margin: 0; /* 確保沒有多餘邊距 */
   }
+
+  /* ✅ 當選單打開時，顯示出來 */
+  .nav-menu.nav-menu-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+  /* --- 手機版漢堡按鈕樣式 --- */
+.menu-toggle {
+  display: none; /* 預設隱藏 */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  margin-right: 5px;
+}
+
+.hamburger {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #061E42;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.hamburger::before, .hamburger::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background: #061E42;
+  left: 0;
+  transition: all 0.3s;
+}
+
+.hamburger::before { top: -6px; }
+.hamburger::after { bottom: -6px; }
+
+/* 漢堡按鈕變叉叉 */
+.hamburger.active { background: transparent; }
+.hamburger.active::before { transform: rotate(45deg); top: 0; }
+.hamburger.active::after { transform: rotate(-45deg); bottom: 0; }
+
+/* --- 手機版適配邏輯 --- */
+@media (max-width: 768px) {
+  .menu-toggle { display: block; } /* 顯示按鈕 */
+
+  .nav-menu {
+    position: absolute;
+    top: 70px; /* 膠囊下方 */
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    width: 90%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    gap: 15px;
+  }
+
+  /* 選單打開時的樣式 */
+  .nav-menu-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .nav-item {
+    font-size: 1.1rem;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+}
   </style>
