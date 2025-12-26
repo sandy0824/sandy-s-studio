@@ -6,7 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/HomeView/', // 例如 '/my-vue-portfolio/'
+  base: '/sandy-studio/', // 例如 '/my-vue-portfolio/'
   plugins: [
     vue(),
     vueDevTools(),
