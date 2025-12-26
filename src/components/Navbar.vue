@@ -6,7 +6,7 @@
   const navLinks = ref([
     { name: '作品集', path: '/' },
     { name: '關於我', path: '/about' },
-    { name: '成績', path: '/contact' }
+    { name: '學習成績', path: '/score' }
   ])
   
   const isScrolled = ref(false)

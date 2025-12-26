@@ -3,12 +3,12 @@
   
   // 模擬作品數據
   const projects = ref([
-    { id: 1, title: 'Mystic Flora', category: '個人', tech: 'HTML / CSS', img: 'https://picsum.photos/800/800?random=1', description: '這是一段關於 Mystic Flora 的詳細介紹。探討自然與數位藝術的結合。' },
-    { id: 2, title: 'Urban Echo', category: '個人', tech: 'HTML / CSS', img: 'https://picsum.photos/800/800?random=2', description: '城市回響專案，專注於現代都市建築的視覺呈現。' },
-    { id: 3, title: 'Silent Sea', category: '個人', tech: 'HTML / CSS', img: 'https://picsum.photos/800/800?random=3', description: '捕捉海洋最寧靜的瞬間，展示大自然的壯闊。' },
-    { id: 4, title: 'Neon Pulse', category: '個人', tech: 'HTML / CSS', img: 'https://picsum.photos/800/800?random=4', description: '霓虹脈動：為電競品牌設計的全新視覺識別系統。' },
-    { id: 5, title: 'Digital Soul', category: '個人', tech: 'HTML / CSS', img: 'https://picsum.photos/800/800?random=5', description: '探索數位靈魂與人類互動的邊界。' },
-    { id: 6, title: 'Golden Hour', category: '個人', tech: 'HTML / CSS', img: 'https://picsum.photos/800/800?random=6', description: '記錄黃昏時刻最溫暖的光影變化。' },
+    { id: 1, title: '海獺冰淇淋', category: '團體', tech: 'ASP.NET Web Forms', img: new URL('../assets/海獺冰淇淋.jpg', import.meta.url).href, description: '待設計' },
+    { id: 2, title: '智慧探險小邦手', category: '團體', tech: 'Vue/ FastAPI/ MS SQL', img: new URL('../assets/智慧探險小邦手.jpg', import.meta.url).href, description: '待設計' },
+    { id: 3, title: 'Memonity', category: '團體', tech: 'React / FastAPI/ MySQL', img: new URL('../assets/Memority.jpg', import.meta.url).href, description: '待設計' },
+    { id: 4, title: 'WISHOP', category: '團體', tech: 'HTML/ PHP / MySQL', img: new URL('../assets/Wishop.jpg', import.meta.url).href, description: '待設計' },
+    { id: 5, title: '輔大活動管理系統', category: '個人', tech: 'HTML / PHP / MySQL', img: new URL('../assets/輔大活動管理系統.jpg', import.meta.url).href, description: '待設計' },
+    { id: 6, title: '輔大教發中心', category: '團體', tech: 'HTML ', img: new URL('../assets/輔大教發中心.jpg', import.meta.url).href, description: '待設計' },
   ])
   
   const selectedProject = ref(null)
@@ -30,8 +30,17 @@
       <div class="bg-blur-dot dot-2"></div>
   
       <div class="gallery-header">
-        <span class="count-tag">DREAMY ARCHIVES</span>
-        <h2 class="gallery-title">作品集</h2>
+        <div class="header-content">
+          <span class="count-tag">
+            <span class="line-decorator"></span>
+            SELECTED ARCHIVES
+            <span class="line-decorator"></span>
+          </span>
+          <h3 class="gallery-title">
+            作品集
+          </h3>
+          <div class="title-underline"></div>
+        </div>
       </div>
   
       <div class="projects-grid">
@@ -116,22 +125,96 @@
   
   /* 3. 標題設計 */
   .gallery-header { 
-    position: relative; 
-    z-index: 2; 
-    margin-bottom: 4rem; 
-  }
-  .count-tag { 
-    letter-spacing: 3px; 
-    color: var(--pink-accent); 
-    font-weight: 700; 
-    font-size: 0.8rem;
-  }
-  .gallery-title { 
-    font-family: 'Playfair Display', serif; 
-    font-size: 3rem; 
-    font-style: italic; 
-    margin-top: 0.5rem;
-  }
+  position: relative; 
+  z-index: 2; 
+  margin-bottom: 6rem; 
+  display: flex;         /* 新增：使用 flex 讓父層容易控制 */
+  justify-content: center; /* 新增：讓內容物在頁面水平居中 */
+  text-align: center;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;    /* 確保所有子元素（tag, title, underline）中軸對齊 */
+  width: 100%;            /* 確保寬度足夠 */
+}
+.count-tag { 
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 關鍵：標籤內的裝飾線與文字置中 */
+  gap: 15px;
+  letter-spacing: 5px; 
+  color: var(--pink-accent); 
+  font-weight: 800; 
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* 裝飾細線 */
+.line-decorator {
+  width: 40px;
+  height: 1px;
+  background: var(--pink-accent);
+  display: inline-block;
+}
+
+.title-underline {
+  position: relative;
+  width: 150px;
+  height: 6px;
+  background: var(--pink-medium);
+  margin: 20px auto 0; /* 關鍵：使用 auto 讓外距自動平分達到置中 */
+  border-radius: 10px;
+}
+
+.title-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 60px; /* 這是細且深的那條 */
+  height: 2px;
+  background: var(--pink-accent);
+  border-radius: 10px;
+  transition: width 0.8s ease;
+}
+
+/* 懸停時細線伸長，增加互動感 */
+.gallery-header:hover .title-underline::after {
+  width: 150px;
+}
+.gallery-title { 
+  font-family: "Noto Serif TC", "Playfair Display", serif;
+  font-size: 3rem; 
+  font-weight: 900;
+  color: #3b3a69;
+  line-height: 1.2;
+  margin: 0;
+  
+  display: flex;          /* 保持 flex 讓中英文排成一排 */
+  justify-content: center; /* 關鍵：讓中英文內容在自己的容器內居中 */
+  align-items: baseline;
+  gap: 15px;
+  
+  background: linear-gradient(to right, #3b3a69, #7d8bb0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  /* 避免在手機端因為寬度太窄而跑掉 */
+  width: 100%;
+  max-width: 800px;
+}
+
+/* 英文副標題：較細、斜體、淡色 */
+.en-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: var(--pink-accent);
+  opacity: 0.7;
+}
   
   /* 4. 迷你化網格佈局 (三列) */
   .projects-grid {
@@ -143,7 +226,7 @@
   
 .project-card {
   background: white;
-  border-radius: 50px; /* 超大圓角 */
+  border-radius: 40px; /* 超大圓角 */
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(183, 182, 224, 0.2); /* 淡淡的紫色陰影 */
   border: 1px solid #f0f0f8;
@@ -160,7 +243,7 @@
 .image-wrapper {
   position: relative;
   width: 100%;
-  height: 250px; /* 從 300px 稍微調降，配合較窄的寬度 */
+  height: 160px; /* 從 250px 大幅縮減到 160px，讓比例變扁 */
   overflow: hidden;
 }
 
@@ -174,7 +257,7 @@
   position: absolute;
   bottom: -1px;
   width: 100%;
-  height: 60px;
+  height: 20px;
   background: white;
   border-radius: 50% 50% 0 0 / 100% 100% 0 0; /* 製作圓弧遮罩 */
 }
@@ -212,7 +295,7 @@
   
   /* 6. 文字資訊區迷你對齊 */
   .project-info {
-    padding: 20px 15px 30px; /* 縮小內距 */
+    padding: 15px 15px 20px; /* 縮小內距 */
   text-align: center; /* 居中對齊 */
   flex-grow: 1;
   display: flex;
@@ -222,12 +305,12 @@
 
 .tag-group {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: 20px;
 }
 
 .tag-pill {
-  padding: 6px 25px;
+  padding: 4px 15px;
   border: 1px solid #e0e0f0;
   border-radius: 50px;
   font-size: 0.9rem;
@@ -249,7 +332,7 @@
   }
   
   .project-name {
-    font-size: 1.5rem; /* 從 2.2rem 調降 */
+    font-size: 1.2rem; 
   font-weight: 900;
   color: #3b3a69;
   margin: 0 0 30px 0;
