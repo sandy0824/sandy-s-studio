@@ -136,7 +136,7 @@
   /* 4. 迷你化網格佈局 (三列) */
   .projects-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 兩兩一排 */
+  grid-template-columns: repeat(3, 1fr); 
   gap: 50px 40px;
   padding: 20px;
 }
@@ -160,7 +160,7 @@
 .image-wrapper {
   position: relative;
   width: 100%;
-  height: 300px; /* 固定高度 */
+  height: 250px; /* 從 300px 稍微調降，配合較窄的寬度 */
   overflow: hidden;
 }
 
@@ -212,7 +212,7 @@
   
   /* 6. 文字資訊區迷你對齊 */
   .project-info {
-  padding: 30px 40px 40px;
+    padding: 20px 15px 30px; /* 縮小內距 */
   text-align: center; /* 居中對齊 */
   flex-grow: 1;
   display: flex;
@@ -249,7 +249,7 @@
   }
   
   .project-name {
-  font-size: 2.2rem;
+    font-size: 1.5rem; /* 從 2.2rem 調降 */
   font-weight: 900;
   color: #3b3a69;
   margin: 0 0 30px 0;
@@ -335,13 +335,22 @@
   .scale-enter-from, .scale-leave-to { opacity: 0; transform: scale(0.9); }
   
   /* 響應式優化 */
-  @media (max-width: 1024px) {
-    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 1200px) {
+  .projects-grid { 
+    grid-template-columns: repeat(2, 1fr); /* 中型螢幕變 2 個一排 */
   }
-  
-  @media (max-width: 640px) {
-    .projects-grid { grid-template-columns: 1fr; }
-    .modal-body { grid-template-columns: 1fr; }
-    .gallery-title { font-size: 2.2rem; }
+}
+
+@media (max-width: 768px) {
+  .projects-grid { 
+    grid-template-columns: 1fr; /* 手機變 1 個一排 */
+    gap: 30px;
   }
+  .gallery-title { 
+    font-size: 2.2rem; 
+  }
+  .modal-body { 
+    grid-template-columns: 1fr; 
+  }
+}
   </style>
