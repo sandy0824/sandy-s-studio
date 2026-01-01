@@ -1002,11 +1002,39 @@ onUnmounted(() => {
   .modal-body { 
     grid-template-columns: 1fr; 
   }
-  .detail-header {
-    justify-content: flex-start; /* 手機版改回靠左比較好看 */
+  .modal-slider {
+    height: auto; /* 確保手機版也是自動高度 */
   }
+
+  .slider-main-img {
+    /* 手機版圖片不要設太高，留空間給下面的文字 */
+    max-height: 50vh; 
+  }
+
+  .modal-content {
+    /* 手機版彈窗通常會撐比較滿 */
+    width: 95%;
+    max-height: 90vh;
+  }
+  .detail-header {
+    /* 讓整個 Header 變回垂直排列，給標籤更多空間 */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
   .detail-tags {
+    /* 手機版寬度撐滿，讓換行更自然 */
+    width: 100%;
     justify-content: flex-start;
+    /* 稍微縮小間距，避免太快就換行 */
+    gap: 8px; 
+  }
+
+  .tag-pill {
+    /* 手機版標籤稍微縮小一點點點，增加容納度 */
+    padding:  12px;
+    font-size: 0.8rem;
   }
 }
   </style>
