@@ -4,10 +4,12 @@
   
   const brandName = ref("Sandy's Studio.")
   const navLinks = ref([
-    { name: '作品集', path: '/' },
-    { name: '關於我', path: '/about' },
-    { name: '學習成績', path: '/score' }
+    { name: '作品集', path: '/', type: 'internal' },
+    { name: '關於我', path: '/about', type: 'internal' },
+    // ✅ 確保 path 指向 public 資料夾下的檔名
+    { name: '學習成績', path: `${import.meta.env.BASE_URL}score.pdf`, type: 'external' }
   ])
+
   
   const isScrolled = ref(false)
   const isMenuOpen = ref(false) // 新增：控制手機版選單開關
@@ -34,10 +36,26 @@
   
         <ul class="nav-menu" :class="{ 'nav-menu-open': isMenuOpen }">
           <li v-for="link in navLinks" :key="link.name">
-            <RouterLink :to="link.path" class="nav-item" @click="isMenuOpen = false">
-              {{ link.name }}
-              <span class="dot"></span>
-            </RouterLink>
+            <RouterLink 
+      v-if="link.type === 'internal'"
+      :to="link.path" 
+      class="nav-item" 
+      @click="isMenuOpen = false"
+    >
+      {{ link.name }}
+      <span class="dot"></span>
+    </RouterLink>
+
+    <a 
+      v-else
+      :href="link.path" 
+      target="_blank" 
+      class="nav-item" 
+      @click="isMenuOpen = false"
+    >
+      {{ link.name }}
+      <span class="dot"></span>
+    </a>
           </li>
         </ul>
   
@@ -84,8 +102,9 @@
     align-items: center;
     justify-content: space-between;
     padding: 8px 12px 8px 24px;
+    height:50px;
     width: 90%;
-    max-width: 900px;
+    max-width: 700px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
@@ -106,7 +125,8 @@
   .logo-dot {
     width: 12px;
     height: 12px;
-    background: #061E42; /* 使用 var(--primary-dark) */
+    background: #3b3a69; /* 使用 var(--primary-dark) */
+    opacity: 0.5;
     border-radius: 50%;
     position: relative;
   }
@@ -124,9 +144,19 @@
   .brand-name {
     font-family: 'Syncopate', sans-serif;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.2rem;
     letter-spacing: 2px;
-    color: #061E42;
+    color: #3b3a69; 
+    opacity: 0.7;
+    background: linear-gradient(90deg, #3b3a69, #ffb8c6, #3b3a69);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5s linear infinite;
+  }
+
+  @keyframes shine {
+    to { background-position: 200% center; }
   }
   
   /* --- 選單樣式 --- */
@@ -140,19 +170,23 @@
   
   .nav-item {
     text-decoration: none;
-    color: #565C59; /* var(--gray-700) */
-    font-size: 0.9rem;
-    font-weight: 500;
+    color: #B0B0B0; /* var(--gray-700) */
+    font-size: 1.2rem;
+    font-weight: bold;
     position: relative;
     padding: 5px 0;
     transition: color 0.3s ease;
   }
   
   .nav-item:hover {
-    color: #061E42;
-  }
+  color: #3b3a69;      /* 滑鼠移上去時稍微變深提醒 */
+  opacity: 0.7;
+}
+  .nav-item.router-link-active {
+    color: #3b3a69; 
+    opacity: 0.7;  /* 增加一點透明度讓它看起來更輕盈 */
+}
   
-  /* WZT 風格的小圓點指示器 */
   .dot {
     position: absolute;
     bottom: -2px;
@@ -165,10 +199,15 @@
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
   
-  .nav-item:hover .dot,
+  .nav-item:hover .dot {
+  transform: translateX(-50%) scale(1);
+  opacity: 0.8;        /* Hover 時點點較亮 */
+}
   .router-link-active .dot {
-    transform: translateX(-50%) scale(1);
-  }
+  transform: translateX(-50%) scale(1);
+  background: #3b3a69; /* 讓點點顏色跟隨品牌標題色 */
+  opacity: 0.5;        /* 關鍵：點點也變淺 */
+}
   
   /* --- 按鈕樣式 --- */
   .hire-me {

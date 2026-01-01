@@ -8,108 +8,57 @@
         <div class="circle"></div>
       </div>
       
-      <h1 class="status-title">頁面製作中</h1>
-      <p class="status-text">感謝您的來訪，我們正在努力裝修這個區塊。<br>敬請期待更精彩的內容！</p>
+      <h1 class="status-title">學習成績</h1>
+      <p class="status-text">
+        點擊下方按鈕即可下載我大學期間的歷年成績單，<br>
+        透過數據了解我的學習歷程！
+      </p>
       
-      <router-link to="/" class="back-home">回作品集看看</router-link>
+      <a 
+        href="/Sandy_Transcript.pdf" 
+        download="Sandy_輔大資管歷年成績單.pdf" 
+        class="download-btn"
+      >
+        下載成績單 (PDF)
+      </a>
+
+      <router-link to="/" class="back-link">回作品集看看</router-link>
     </div>
   </div>
 </template>
 
-<style scoped>
-.home {
-  position: relative;
-  min-height: 100vh;
-  background: #fff5f7;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Noto Serif TC", serif;
-}
-
-/* 兩個背景光暈讓層次感更好 */
-.bg-blur-dot {
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, #ffd1dc 0%, transparent 70%);
-  filter: blur(80px);
-  top: -100px;
-  right: -100px;
-  opacity: 0.6;
-}
-.dot-2 {
-  left: -150px;
-  bottom: -150px;
-  background: radial-gradient(circle, #e2d1f9 0%, transparent 70%);
-}
-
-.content-box {
-  position: relative;
-  z-index: 1;
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(20px);
-  padding: 80px 40px;
-  border-radius: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 30px 60px rgba(255, 184, 198, 0.2);
-  text-align: center;
-  max-width: 500px;
-  width: 90%;
-}
-
-/* 動畫圖示樣式 */
-.loader-icon {
-  margin-bottom: 30px;
-  display: flex;
-  justify-content: center;
-}
-.circle {
-  width: 50px;
-  height: 50px;
-  border: 4px solid var(--pink-light, #ffe4e9);
-  border-top: 4px solid #ffb8c6;
-  border-radius: 50%;
-  animation: spin 1.5s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.status-title {
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: #3b3a69;
-  margin-bottom: 15px;
-  letter-spacing: 2px;
-}
-
-.status-text {
-  color: #7d7ba5;
-  line-height: 1.8;
-  font-size: 1.1rem;
-  margin-bottom: 40px;
-}
-
-/* 返回按鈕樣式 */
-.back-home {
+/* 下載按鈕專屬樣式 */
+.download-btn {
   display: inline-block;
-  padding: 12px 30px;
-  background: white;
-  color: #ffb8c6;
+  padding: 15px 40px;
+  background: #ffb8c6; /* 使用粉色作為主色 */
+  color: white;
   border-radius: 50px;
   text-decoration: none;
   font-weight: 700;
-  transition: 0.3s;
-  box-shadow: 0 10px 20px rgba(255, 184, 198, 0.2);
+  font-size: 1.1rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 20px rgba(255, 184, 198, 0.4);
+  margin-bottom: 20px;
 }
 
-.back-home:hover {
-  background: #ffb8c6;
-  color: white;
-  transform: translateY(-3px);
+.download-btn:hover {
+  background: #ff9fb2;
+  transform: translateY(-5px) scale(1.05); /* 增加一點 Q 彈感 */
+  box-shadow: 0 15px 30px rgba(255, 184, 198, 0.5);
 }
-</style>
+
+/* 返回連結樣式 */
+.back-link {
+  display: block;
+  color: #7d7ba5;
+  text-decoration: none;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.back-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
